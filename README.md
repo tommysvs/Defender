@@ -1,2 +1,2 @@
 # Defender
-Desarrollo del videojuego creado en 1980 utilizando C++ junto a la libreria SDL2.
+Development of videogame created on 1980 using C++ together with SDL2 library.
