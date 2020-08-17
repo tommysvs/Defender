@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef MOUSE_H
+#define MOUSE_H
+
 #include <SDL.h>
 
 class Mouse {
@@ -8,6 +11,8 @@ public:
 
 	void setXY(int, int);
 	void controlMotion(int, int);
-	bool wasPressed(SDL_Rect);
+	bool isPressed(SDL_Rect);
 	bool mouseMotion(SDL_Rect);
 };
+
+#endif

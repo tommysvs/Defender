@@ -1,13 +1,12 @@
 #include "SceneManager.h"
-#include <iostream>
 
 static Scenes actualScene;
-static Scene* scenes[1];
+static Scene* scenes[6];
 
 SceneManager::SceneManager() {}
 
-void SceneManager::setScene(Scenes nuevaEscena) {
-	actualScene = nuevaEscena;
+void SceneManager::setScene(Scenes newScene) {
+	actualScene = newScene;
 }
 
 void SceneManager::draw() {
@@ -20,6 +19,11 @@ void SceneManager::update() {
 
 void SceneManager::initScenes() {
 	scenes[MAINMENU] = new MainMenu();
+	scenes[LEVEL1] = new Level1();
+	scenes[LEVEL2] = new Level2();
+	scenes[LEVEL3] = new Level3();
+	scenes[SCORE] = new Score();
+	scenes[GAMEOVER] = new GameOver();
 
 	actualScene = MAINMENU;
 }

@@ -5,5 +5,5 @@ Button::Button(const char* file) : Image(file) {}
 Button::Button(const char* file, int x, int y) : Image(file, x, y) {}
 
 bool Button::pressed() {
-	return mouse.wasPressed(this->getRect());
+	return mouse.isPressed(this->getRect());
 }

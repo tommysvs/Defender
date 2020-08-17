@@ -6,7 +6,7 @@ static int y;
 static int motionX;
 static int motionY;
 
-Mouse::Mouse() { }
+Mouse::Mouse() {}
 
 void Mouse::setXY(int _x, int _y) {
 	x = _x;
@@ -18,7 +18,7 @@ void Mouse::controlMotion(int _x, int _y) {
 	motionY = _y;
 }
 
-bool Mouse::wasPressed(SDL_Rect rect) {
+bool Mouse::isPressed(SDL_Rect rect) {
 	if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h) 	{
 		setXY(0, 0);
 		return true;

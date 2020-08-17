@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
+
 #include <SDL.h>
 #include "Window.h"
 
@@ -18,3 +21,5 @@ private:
 	SDL_Texture* texture;
 	SDL_Rect rect;
 };
+
+#endif

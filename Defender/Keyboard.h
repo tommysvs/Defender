@@ -1,8 +1,11 @@
 #pragma once
 #include <SDL.h>
 
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
+
 enum KEYS {
-	LEFT, RIGHT, UP, DOWN, ESC, SPACE
+	LEFT, RIGHT, UP, DOWN, ESC, SPACE, ENTER
 };
 
 class Keyboard {
@@ -12,3 +15,5 @@ public:
 	bool isPressed(KEYS);
 	void stopKey(KEYS);
 };
+
+#endif 

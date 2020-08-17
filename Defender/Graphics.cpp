@@ -1,7 +1,7 @@
 #include "Graphics.h"
 
 Graphics::Graphics() {
-	rect = { 0,0,0,0 };
+	rect = { 0, 0, 0, 0 };
 }
 
 void Graphics::setTexture(SDL_Texture* t) {

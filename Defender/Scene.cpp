@@ -1,12 +1,10 @@
-#include "Scene.h"
 #include <iostream>
+#include "Scene.h"
 
-Scene::Scene() { }
+using namespace std;
 
-void Scene::draw() {
-	std::cout << "Draw";
-}
+Scene::Scene() {}
 
-void Scene::update() {
-	std::cout << "Update";
-}
+void Scene::draw() {}
+
+void Scene::update() {}

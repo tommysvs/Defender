@@ -10,10 +10,11 @@ int main(int argc, char* argv[]) {
 	
 	Mouse mouse;
 	Window window;
-	window.winInit();
+	window.mainMenu();
 	SceneManager manager;
 	manager.initScenes();
 	SDL_Event event;
+	Keyboard keyboard;
 
 	while (window.isRunning()) {
 		while (SDL_PollEvent(&event)) {
@@ -26,6 +27,10 @@ int main(int argc, char* argv[]) {
 					break;
 				case SDL_MOUSEMOTION:
 					mouse.controlMotion(event.button.x, event.button.y);
+					break;
+				case SDL_KEYDOWN:
+				case SDL_KEYUP:
+					keyboard.controlEvent(event);
 					break;
 			}
 		}

@@ -18,7 +18,7 @@ SDL_Renderer* Window::getRender() {
 	return renderer;
 }
 
-void Window::winInit() {
+void Window::mainMenu() {
 	window = SDL_CreateWindow("Defender", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 876, 720, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
