@@ -4,11 +4,12 @@
 #define GAME_OVER_H
 
 #include <string>
+#include "Global.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Window.h"
 
-class GameOver : public Scene {
+class GameOver : public Scene, public Global {
 public:
 	GameOver();
 

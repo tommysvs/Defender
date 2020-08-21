@@ -5,7 +5,8 @@
 
 using namespace std;
 
-int score, lives;
+int score = 0;
+int lives = 3;
 bool right;
 
 int FPS = 60;

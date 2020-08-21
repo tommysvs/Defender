@@ -18,6 +18,7 @@ MainMenu::MainMenu() {
 	arrow = IMG_LoadTexture(window.getRender(), "Images/arrow.png");
 
 	option = 1;
+	game_state = GAMESTATE::ONMENU;
 }
 
 void MainMenu::draw() {
@@ -87,7 +88,7 @@ void MainMenu::update() {
 
 	if (keyboard.isPressed(ENTER) && option == 1) {
 		manager.setScene(LEVEL1);
-		game_state = INTROLEVEL;
+		keyboard.stopKey(ENTER);
 	}
 	else if (keyboard.isPressed(ENTER) && option == 2)
 		manager.setScene(SCORE);

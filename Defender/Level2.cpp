@@ -46,8 +46,8 @@ void Level2::draw() {
 	SDL_QueryTexture(ground, NULL, NULL, &rectGround.w, &rectGround.h);
 	SDL_RenderCopy(window.getRender(), ground, NULL, &rectGround);
 
-	if (game_state == RUNNING) {
-		while (game_state == RUNNING) {
+	if (game_state == GAMESTATE::RUNNING) {
+		while (game_state == GAMESTATE::RUNNING) {
 			int  ticks = SDL_GetTicks();
 			int  sprite = (ticks / 500) % 3;
 
@@ -60,7 +60,7 @@ void Level2::draw() {
 			break;
 		}
 	}
-	else if (game_state == PAUSED) {
+	else if (game_state == GAMESTATE::PAUSED) {
 		SDL_QueryTexture(stars, NULL, NULL, &rectStars.w, &rectStars.h);
 		SDL_RenderCopy(window.getRender(), stars, NULL, &rectStars);
 	}
@@ -91,13 +91,13 @@ void Level2::draw() {
 void Level2::update() {
 	Keyboard keyboard;
 	
-	if (game_state == INTROLEVEL) {
+	if (game_state == GAMESTATE::INTROLEVEL) {
 		level2_text->setText("Level 2");
 		level2_text->render();
 
-		game_state = RUNNING;
+		game_state = GAMESTATE::RUNNING;
 	}
-	else if (game_state == RUNNING) {
+	else if (game_state == GAMESTATE::RUNNING) {
 		gameLogic();
 		enemyLogic();
 
@@ -105,14 +105,14 @@ void Level2::update() {
 			level2_text->setText("Paused");
 			level2_text->render();
 
-			game_state = PAUSED;
+			game_state = GAMESTATE::PAUSED;
 		}
 
 		keyboard.stopKey(ESC);
 	}
-	else if (game_state == PAUSED) {
+	else if (game_state == GAMESTATE::PAUSED) {
 		if (keyboard.isPressed(ESC)) {
-			game_state = RUNNING;
+			game_state = GAMESTATE::RUNNING;
 			gameLogic();
 		}
 
@@ -198,12 +198,12 @@ void Level2::gameLogic() {
 
 	if (score >= 1400) {
 		manager.setScene(LEVEL2);
-		game_state = INTROLEVEL;
+		game_state = GAMESTATE::INTROLEVEL;
 	}
 
 	if (lives == 0) {
 		manager.setScene(GAMEOVER);
-		game_state = LOSE;
+		game_state = GAMESTATE::LOSE;
 		global.saveScores(score);
 	}
 }

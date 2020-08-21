@@ -12,8 +12,8 @@ using namespace std;
 //Mutant = 200
 //Baiter = 250
 
-enum GAMESTATE {
-	INTROLEVEL, RUNNING, PAUSED, LOSE, WIN
+enum class GAMESTATE {
+	INTROLEVEL, RUNNING, PAUSED, LOSE, WIN, ONMENU
 };
 
 //screen size

@@ -16,8 +16,8 @@ void Background::draw() {
 	SDL_QueryTexture(ground, NULL, NULL, &rectGround.w, &rectGround.h);
 	SDL_RenderCopy(window.getRender(), ground, NULL, &rectGround);
 
-	if (game_state == RUNNING) {
-		while (game_state == RUNNING) {
+	if (game_state == GAMESTATE::RUNNING) {
+		while (game_state == GAMESTATE::RUNNING) {
 			int  ticks = SDL_GetTicks();
 			int  sprite = (ticks / 500) % 3;
 
@@ -30,7 +30,7 @@ void Background::draw() {
 			break;
 		}
 	}
-	else if (game_state == PAUSED) {
+	else if (game_state == GAMESTATE::PAUSED) {
 		SDL_QueryTexture(stars, NULL, NULL, &rectStars.w, &rectStars.h);
 		SDL_RenderCopy(window.getRender(), stars, NULL, &rectStars);
 	}

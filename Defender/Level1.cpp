@@ -12,11 +12,9 @@ Level1::Level1() {
 	level1_top = new Image("Images/level1_top.png", 0, 0);
 	level1_text = new Text("", "Fonts/defender.ttf", 20, lightblue, 370, 350);
 
-	score = 0;
 	string score_str = to_string(score);
 	score_display = new Text(score_str.c_str(), "Fonts/defender.ttf", 20, lightblue, 220, 70);
 
-	lives = 3;
 	life = IMG_LoadTexture(window.getRender(), "Images/life.png");
 	life2 = IMG_LoadTexture(window.getRender(), "Images/life.png");
 	life3 = IMG_LoadTexture(window.getRender(), "Images/life.png");
@@ -37,6 +35,8 @@ Level1::Level1() {
 	ship_left = IMG_LoadTexture(window.getRender(), "Images/ship_left.png");
 	shoot = IMG_LoadTexture(window.getRender(), "Images/shoot.png");
 	rectShip.x = 30; rectShip.y = 400;
+
+	game_state = GAMESTATE::INTROLEVEL;
 }
 
 void Level1::draw() {
@@ -48,8 +48,8 @@ void Level1::draw() {
 	SDL_QueryTexture(ground, NULL, NULL, &rectGround.w, &rectGround.h);
 	SDL_RenderCopy(window.getRender(), ground, NULL, &rectGround);
 
-	if (game_state == RUNNING) {
-		while (game_state == RUNNING) {
+	if (game_state == GAMESTATE::RUNNING) {
+		while (game_state == GAMESTATE::RUNNING) {
 			int  ticks = SDL_GetTicks();
 			int  sprite = (ticks / 500) % 3;
 
@@ -62,7 +62,7 @@ void Level1::draw() {
 			break;
 		}
 	}
-	else if (game_state == PAUSED) {
+	else if (game_state == GAMESTATE::PAUSED) {
 		SDL_QueryTexture(stars, NULL, NULL, &rectStars.w, &rectStars.h);
 		SDL_RenderCopy(window.getRender(), stars, NULL, &rectStars);
 	}
@@ -93,13 +93,13 @@ void Level1::draw() {
 void Level1::update() {
 	Keyboard keyboard;
 	
-	if (game_state == INTROLEVEL) {
+	if (game_state == GAMESTATE::INTROLEVEL) {
 		level1_text->setText("Level 1");
 		level1_text->render();
 
-		game_state = RUNNING;
+		game_state = GAMESTATE::RUNNING;
 	}
-	else if (game_state == RUNNING) {
+	else if (game_state == GAMESTATE::RUNNING) {
 		gameLogic();
 		enemyLogic();
 
@@ -107,14 +107,14 @@ void Level1::update() {
 			level1_text->setText("Paused");
 			level1_text->render();
 
-			game_state = PAUSED;
+			game_state = GAMESTATE::PAUSED;
 		}
 
 		keyboard.stopKey(ESC);
 	}
-	else if (game_state == PAUSED) {
+	else if (game_state == GAMESTATE::PAUSED) {
 		if (keyboard.isPressed(ESC)) {
-			game_state = RUNNING;
+			game_state = GAMESTATE::RUNNING;
 			gameLogic();
 		}
 
@@ -200,13 +200,13 @@ void Level1::gameLogic() {
 
 	if (score >= 1400) {
 		manager.setScene(LEVEL2);
-		game_state = INTROLEVEL;
+		game_state = GAMESTATE::INTROLEVEL;
 	}
 
 	if (lives == 0) {
 		manager.setScene(GAMEOVER);
-		game_state = LOSE;
 		global.saveScores(score);
+		game_state = GAMESTATE::LOSE;
 	}
 }
 

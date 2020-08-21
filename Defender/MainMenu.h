@@ -3,12 +3,13 @@
 #ifndef MAIN_MENU_H
 #define MAIN_MENU_H
 
+#include "Global.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Window.h"
 #include "Keyboard.h"
 
-class MainMenu : public Scene {
+class MainMenu : public Scene, public Global {
 public:
 	MainMenu();
 
