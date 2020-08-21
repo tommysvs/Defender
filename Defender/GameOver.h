@@ -7,7 +7,6 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Window.h"
-#include "Mouse.h"
 
 class GameOver : public Scene {
 public:

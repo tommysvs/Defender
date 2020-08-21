@@ -25,21 +25,21 @@
     <Filter Include="Header Files\Functions">
       <UniqueIdentifier>{b3f26d71-1525-4f40-b436-7bf8b657511a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Elements">
+      <UniqueIdentifier>{5898ce88-b57b-4b1a-9747-3251bc23fe68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Elements">
+      <UniqueIdentifier>{24e51c00-8f0f-43a1-99d8-e91fe67bb7e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics.cpp">
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse.cpp">
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
@@ -75,11 +75,20 @@
     <ClCompile Include="GameOver.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Global.cpp">
+      <Filter>Source Files\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Source Files\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Ship.cpp">
+      <Filter>Source Files\Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Button.h">
-      <Filter>Header Files\Functions</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics.h">
       <Filter>Header Files\Functions</Filter>
     </ClInclude>
@@ -87,9 +96,6 @@
       <Filter>Header Files\Functions</Filter>
     </ClInclude>
     <ClInclude Include="Keyboard.h">
-      <Filter>Header Files\Functions</Filter>
-    </ClInclude>
-    <ClInclude Include="Mouse.h">
       <Filter>Header Files\Functions</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
@@ -119,11 +125,20 @@
     <ClInclude Include="Level3.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Global.h">
-      <Filter>Header Files\Functions</Filter>
-    </ClInclude>
     <ClInclude Include="GameOver.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>Header Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship.h">
+      <Filter>Header Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Header Files\Elements</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

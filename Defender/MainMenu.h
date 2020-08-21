@@ -6,7 +6,6 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Window.h"
-#include "Mouse.h"
 #include "Keyboard.h"
 
 class MainMenu : public Scene {
@@ -17,9 +16,10 @@ public:
 	virtual void update();
 private:
 	Window window;
+	SDL_Event event;
 
-	Image* logo;
-	Image* logo2;
+	SDL_Texture* logo;
+	SDL_Rect rectLogo;
 
 	SDL_Texture* play;
 	SDL_Texture* score;
@@ -31,6 +31,8 @@ private:
 	SDL_Rect rectPlay_over;
 	SDL_Rect rectScore_over;
 	SDL_Rect rectArrow;
+	SDL_Rect dstrect;
+	SDL_Rect srcrect;
 
 	int option;
 

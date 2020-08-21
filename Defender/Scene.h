@@ -7,7 +7,6 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #include "Image.h"
-#include "Button.h"
 #include "Text.h"
 
 //Enum para controlar de manera mas facil las escenas

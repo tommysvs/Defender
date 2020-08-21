@@ -8,7 +8,6 @@
 int main(int argc, char* argv[]) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	
-	Mouse mouse;
 	Window window;
 	window.mainMenu();
 	SceneManager manager;
@@ -21,12 +20,6 @@ int main(int argc, char* argv[]) {
 			switch (event.type) {
 				case SDL_QUIT:
 					window.close();
-					break;
-				case SDL_MOUSEBUTTONDOWN:
-					mouse.setXY(event.button.x, event.button.y);
-					break;
-				case SDL_MOUSEMOTION:
-					mouse.controlMotion(event.button.x, event.button.y);
 					break;
 				case SDL_KEYDOWN:
 				case SDL_KEYUP:

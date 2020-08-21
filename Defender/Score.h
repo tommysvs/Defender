@@ -5,10 +5,10 @@
 
 #include "Scene.h"
 #include "SceneManager.h"
+#include "Global.h"
 #include "Window.h"
-#include "Mouse.h"
 
-class Score : public Scene {
+class Score : public Scene, public Global {
 public:
 	Score();
 
@@ -17,7 +17,13 @@ public:
 private:
 	Window window;
 
+	SDL_Texture* logo;
+	SDL_Rect rectLogo;
+
 	Text* high_scores;
+	Text* press_enter;
+
+	Text* arScore;
 };
 
 #endif 

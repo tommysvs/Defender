@@ -1,6 +1,6 @@
 #include "Keyboard.h"
 
-bool keyboard[6];
+bool keyboard[7];
 
 Keyboard::Keyboard() { }
 
@@ -37,6 +37,9 @@ void Keyboard::controlEvent(SDL_Event event)
 			break;
 		case SDLK_RETURN:
 			keyboard[ENTER] = state;
+			break;
+		case SDLK_f:
+			keyboard[F] = state;
 			break;
 	}
 }

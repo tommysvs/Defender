@@ -1,18 +1,20 @@
-#include "Level2.h"
 #include "Global.h"
+#include "Level2.h"
+
+static GAMESTATE game_state;
 
 SDL_Color lightblue2 = { 0, 240, 255, 255 };
 
 Level2::Level2() {
 	TTF_Init();
+	srand(time(0));
 
 	level2_top = new Image("Images/level2_top.png", 0, 0);
-	ground = new Image("Images/ground.png", 0, 0);
+	level2_text = new Text("", "Fonts/defender.ttf", 20, lightblue2, 370, 350);
 
 	string score_str = to_string(score);
 	score_display = new Text(score_str.c_str(), "Fonts/defender.ttf", 20, lightblue2, 220, 70);
 
-	lives = 3;
 	life = IMG_LoadTexture(window.getRender(), "Images/life.png");
 	life2 = IMG_LoadTexture(window.getRender(), "Images/life.png");
 	life3 = IMG_LoadTexture(window.getRender(), "Images/life.png");
@@ -20,14 +22,58 @@ Level2::Level2() {
 	rectLife2.x = rectLife.x + 45; rectLife2.y = rectLife.y;
 	rectLife3.x = rectLife2.x + 45; rectLife3.y = rectLife.y;
 
-	lander = IMG_LoadTexture(window.getRender(), "Images/lander.png");
-	rectLander.x = 400; rectLander.y = 300;
-}
+	ground = IMG_LoadTexture(window.getRender(), "Images/ground.png");
+	stars = IMG_LoadTexture(window.getRender(), "Images/stars.png");
+	rectGround.x = 0; rectGround.y = 0;
+	rectStars.x = 0; rectStars.y = 0;
 
+	lander_life = 8;
+	lander = IMG_LoadTexture(window.getRender(), "Images/lander.png");
+	rectLander.x = 300; rectLander.y = 300;
+
+	ship_right = IMG_LoadTexture(window.getRender(), "Images/ship_right.png");
+	ship_left = IMG_LoadTexture(window.getRender(), "Images/ship_left.png");
+	shoot = IMG_LoadTexture(window.getRender(), "Images/shoot.png");
+	rectShip.x = 30; rectShip.y = 400;
+}
 
 void Level2::draw() {
 	level2_top->render();
+	level2_text->render();
+
 	score_display->render();
+
+	SDL_QueryTexture(ground, NULL, NULL, &rectGround.w, &rectGround.h);
+	SDL_RenderCopy(window.getRender(), ground, NULL, &rectGround);
+
+	if (game_state == RUNNING) {
+		while (game_state == RUNNING) {
+			int  ticks = SDL_GetTicks();
+			int  sprite = (ticks / 500) % 3;
+
+			SDL_Rect srcrect = { sprite * 876, 0, 876, rectStars.h };
+			SDL_Rect dstrect = { rectStars.x, rectStars.y, 876, rectStars.h };
+
+			SDL_QueryTexture(stars, NULL, NULL, &rectStars.w, &rectStars.h);
+			SDL_RenderCopy(window.getRender(), stars, &srcrect, &dstrect);
+
+			break;
+		}
+	}
+	else if (game_state == PAUSED) {
+		SDL_QueryTexture(stars, NULL, NULL, &rectStars.w, &rectStars.h);
+		SDL_RenderCopy(window.getRender(), stars, NULL, &rectStars);
+	}
+
+	right = true;
+	if (right) {
+		SDL_QueryTexture(ship_right, NULL, NULL, &rectShip.w, &rectShip.h);
+		SDL_RenderCopy(window.getRender(), ship_right, NULL, &rectShip);
+	}
+	else {
+		SDL_QueryTexture(ship_left, NULL, NULL, &rectShip.w, &rectShip.h);
+		SDL_RenderCopy(window.getRender(), ship_left, NULL, &rectShip);
+	}
 
 	SDL_QueryTexture(life, NULL, NULL, &rectLife.w, &rectLife.h);
 	SDL_RenderCopy(window.getRender(), life, NULL, &rectLife);
@@ -43,27 +89,167 @@ void Level2::draw() {
 }
 
 void Level2::update() {
+	Keyboard keyboard;
+	
+	if (game_state == INTROLEVEL) {
+		level2_text->setText("Level 2");
+		level2_text->render();
+
+		game_state = RUNNING;
+	}
+	else if (game_state == RUNNING) {
+		gameLogic();
+		enemyLogic();
+
+		if (keyboard.isPressed(ESC)) {
+			level2_text->setText("Paused");
+			level2_text->render();
+
+			game_state = PAUSED;
+		}
+
+		keyboard.stopKey(ESC);
+	}
+	else if (game_state == PAUSED) {
+		if (keyboard.isPressed(ESC)) {
+			game_state = RUNNING;
+			gameLogic();
+		}
+
+		keyboard.stopKey(ESC);
+	}
+}
+
+void Level2::gameLogic() {
 	SceneManager manager;
-	Mouse mouse;
+	Keyboard keyboard;
+	Global global;
+
+	frameDelay = 80 / FPS;
+	if (frameDelay > frameTime)
+		SDL_Delay(frameDelay - frameTime);
+
+	level2_text->setText("");
+	level2_text->render();
+
+	if (keyboard.isPressed(LEFT)) {
+		SDL_QueryTexture(ship_left, NULL, NULL, &rectShip.w, &rectShip.h);
+		SDL_RenderCopy(window.getRender(), ship_left, NULL, &rectShip);
+
+		rectShip.x -= 1;
+		rectGround.x -= -1;
+		rectStars.x -= -1;
+
+		right = false;
+	}
+
+	if (keyboard.isPressed(RIGHT)) {
+		SDL_QueryTexture(ship_right, NULL, NULL, &rectShip.w, &rectShip.h);
+		SDL_RenderCopy(window.getRender(), ship_right, NULL, &rectShip);
+
+		rectShip.x += 1;
+		rectGround.x += -1;
+		rectStars.x += -1;
+
+		right = true;
+	}
+
+	if (keyboard.isPressed(UP))
+		rectShip.y -= 1;
+
+	if (keyboard.isPressed(DOWN))
+		rectShip.y += 1;
+
+	if (rectShip.x < 0)
+		rectShip.x = 0;
+	else if (rectShip.x > SCREEN_WIDTH - rectShip.w)
+		rectShip.x = SCREEN_WIDTH - rectShip.w;
+
+	if (rectShip.y < 120)
+		rectShip.y = 120;
+	else if (rectShip.y > 650 - rectShip.w)
+		rectShip.y = 650 - rectShip.w;
+
+	if (keyboard.isPressed(SPACE)) {
+		if (right) {
+			rectShoot.y = rectShip.y + 19;
+			rectShoot.x = rectShip.x + rectShip.w + 20;
+
+			SDL_QueryTexture(shoot, NULL, NULL, &rectShoot.w, &rectShoot.h);
+			SDL_RenderCopy(window.getRender(), shoot, NULL, &rectShoot);
+		}
+		else {
+			rectShoot.y = rectShip.y + 19;
+			rectShoot.x = rectShip.x - (rectShip.w * 2) - 62;
+
+			SDL_QueryTexture(shoot, NULL, NULL, &rectShoot.w, &rectShoot.h);
+			SDL_RenderCopy(window.getRender(), shoot, NULL, &rectShoot);
+		}
+
+		if ((rectShoot.x + rectShoot.w) == rectLander.x) {
+			updateScore();
+			lander_life--;
+		}
+	}
+
+	if (keyboard.isPressed(F)) {
+		updateLives();
+	}
+
+	if (score >= 1400) {
+		manager.setScene(LEVEL2);
+		game_state = INTROLEVEL;
+	}
+
+	if (lives == 0) {
+		manager.setScene(GAMEOVER);
+		game_state = LOSE;
+		global.saveScores(score);
+	}
+}
+
+void Level2::enemyLogic() {
 	Keyboard keyboard;
 
-	if (keyboard.isPressed(SPACE))
-		updateScore();
+	if (rectLander.x - rectLander.w != rectShip.x) {
+		SDL_QueryTexture(lander, NULL, NULL, &rectLander.w, &rectLander.h);
+		SDL_RenderCopy(window.getRender(), lander, NULL, &rectLander);
 
-	if (mouse.isPressed(rectLander))
-		updateLives();
+		rectLander.x += (rand() % 2);
+		rectLander.y += (rand() % 2);
 
-	if (score > 2200)
-		manager.setScene(LEVEL3);
+		if (rectLander.x < 0)
+			rectLander.x = 0;
+		else if (rectLander.x == 0) {
+			rectLander.x += (rand() % 2);
+			rectLander.y += (rand() % 2);
+		}
+		else if (rectLander.x > SCREEN_WIDTH - rectLander.w)
+			rectLander.x = SCREEN_WIDTH - rectLander.w;
+		else if (rectLander.x == SCREEN_WIDTH - rectLander.w) {
+			rectLander.x += (rand() % 2);
+			rectLander.y += (rand() % 2);
+		}
 
-	if (lives == 0)
-		manager.setScene(GAMEOVER);
+		if (rectLander.y < 120)
+			rectLander.y = 120;
+		else if (rectLander.y == 120) {
+			rectLander.x += (rand() % 2);
+			rectLander.y += (rand() % 2);
+		}
+		else if (rectLander.y > 550 - rectLander.w)
+			rectLander.y = 550 - rectLander.w;
+		else if (rectLander.y == 550 - rectLander.w) {
+			rectLander.x += (rand() % 2);
+			rectLander.y += (rand() % 2);
+		}
+	}
 }
 
 void Level2::updateScore() {
 	int xPos = 0;
 
-	score++;
+	score = score + 150;
 	string score_str = to_string(score);
 
 	if (score <= 9)

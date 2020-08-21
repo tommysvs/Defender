@@ -145,8 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameOver.cpp" />
+    <ClCompile Include="Global.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -155,15 +157,16 @@
     <ClCompile Include="Level3.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Button.h" />
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Level1.h" />
@@ -173,10 +176,10 @@
     <ClInclude Include="Level2.h" />
     <ClInclude Include="Level3.h" />
     <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Score.h" />
+    <ClInclude Include="Ship.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
